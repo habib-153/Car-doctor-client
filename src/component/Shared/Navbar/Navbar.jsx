@@ -15,13 +15,16 @@ const Navbar = () => {
     <li><Link to='/about'>About</Link></li>
     {
       user?.email?
+      <>
+      <li><Link to='/bookings'>My Bookings</Link></li>
       <li><button onClick={handleLogOut}>LogOut</button></li>
+      </>
       :<li><Link to='/login'>Login</Link></li>
     }
     
   </>
   return (
-    <div className="navbar bg-base-100 h-28">
+    <div className="navbar bg-base-100 h-24">
       <div className="navbar-start">
         <div className="dropdown">
           <label tabIndex={0} className="btn btn-ghost lg:hidden">
@@ -47,8 +50,8 @@ const Navbar = () => {
             {lists}
           </ul>
         </div>
-        <Link to='/' className="btn btn-ghost normal-case text-xl">
-          <img src={logo} alt="" />
+        <Link to='/' className="normal-case">
+          <img className='h-[50px]' src={logo} alt="" />
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">

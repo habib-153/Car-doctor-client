@@ -2,6 +2,7 @@
 import { useContext } from "react";
 import { useLoaderData } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import Swal from "sweetalert2";
 
 const CheckOut = () => {
   const service = useLoaderData();
@@ -19,10 +20,10 @@ const CheckOut = () => {
     const booking ={
         customerName: name,
         email,
-        img,
+        image: img,
         date,
         service: title,
-        service_id: _id,
+        service_id: service_id,
         price: price,
     }
     console.log(booking)
@@ -37,6 +38,15 @@ const CheckOut = () => {
     .then(res => res.json())
     .then(data => {
         console.log(data)
+        if(data.insertedId){
+            Swal.fire({
+            icon: 'success',
+            title: 'Order placed successfully',
+            showConfirmButton: true,
+            //timer: 1500
+          })
+        }
+        
     })
 
   }
