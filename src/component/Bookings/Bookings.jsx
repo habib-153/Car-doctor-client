@@ -1,24 +1,31 @@
-import { useContext, useEffect, useState } from "react";
-import { AuthContext } from "../Provider/AuthProvider";
+import {useEffect, useState } from "react";
 import BookingRow from "./BookingRow";
 import Swal from "sweetalert2";
-import axios from "axios";
+//import axios from "axios";
+import useAuth from "../Hooks/useAuth";
+import useAxiosSecure from "../Hooks/useAxiosSecure";
 
 const Bookings = () => {
-    const { user } = useContext(AuthContext)
+    const { user } = useAuth()
     const [bookings, setBookings] = useState([])
+    const axiosSecure = useAxiosSecure()
 
-    const url = `http://localhost:5000/bookings?email=${user?.email}`;
+    //const url = `https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app/bookings?email=${user?.email}`;
+    const url = `/bookings?email=${user?.email}`;
     useEffect(()=>{
+        axiosSecure.get(url)
+        .then(res => setBookings(res.data))
 
-        axios.get(url, {withCredentials: true})
-        .then(res =>{
-          setBookings(res.data)
-        })
+        // axios.get(url, {withCredentials: true})
+        // .then(res =>{
+        //   setBookings(res.data)
+        // })
+
+
         // fetch(url)
         // .then(res => res.json())
         // .then(data => setBookings(data))
-    },[url])
+    },[url, axiosSecure])
 
     const handleDelete = (id) => {
         Swal.fire({
@@ -31,7 +38,7 @@ const Bookings = () => {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
-            fetch(`http://localhost:5000/bookings/${id}`,{
+            fetch(`https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app/bookings/${id}`,{
                 method: 'DELETE',
             })
               .then((res) => res.json())
@@ -48,7 +55,7 @@ const Bookings = () => {
     }
 
     const handleConfirm = id =>{
-        fetch(`http://localhost:5000/bookings/${id}`,{
+        fetch(`https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app/bookings/${id}`,{
             method: 'PATCH',
             headers:{
                 'content-type': 'application/json'
