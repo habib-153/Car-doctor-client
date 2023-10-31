@@ -36,11 +36,17 @@ const AuthProvider = ({children}) => {
             const loggedUser = { email: userEmail}
             setUser(currentUser)
             setLoading(false)
-            if(!currentUser){
-                 axios.post('https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app/logout',loggedUser,{withCredentials: true})
+            if(currentUser){
+                 axios.post('http://localhost:5000/jwt',loggedUser,{withCredentials: true})
             .then(res =>{
-               console.log(res.data)
+               console.log('token response',res.data)
              })
+            }
+            else{
+                axios.post('http://localhost:5000/logout',loggedUser,{withCredentials: true})
+                .then(res =>{
+                    console.log(res.data)
+                })
             }
         })
         return ()=>{

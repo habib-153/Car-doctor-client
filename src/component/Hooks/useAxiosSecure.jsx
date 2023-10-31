@@ -4,7 +4,7 @@ import useAuth from "./useAuth";
 import { useNavigate } from "react-router-dom";
 
 const axiosSecure = axios.create({
-    baseURL: 'https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app',
+    baseURL: 'http://localhost:5000',
     withCredentials: true,
 })
 
@@ -25,7 +25,7 @@ const useAxiosSecure = () => {
                     .catch(err => console.error(err))
             }
         })
-    },[])
+    },[logOut, navigate])
     return axiosSecure;
 };
 

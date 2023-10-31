@@ -1,6 +1,5 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import imgLogin from './../../assets/images/login/login.svg';
-import axios from 'axios';
 import useAuth from '../Hooks/useAuth';
 const Login = () => {
     
@@ -19,19 +18,10 @@ const Login = () => {
         .then(res =>{
           const loggedInUser = res.user;
           console.log(loggedInUser)
-          
-          const user ={ email };
-          if(loggedInUser){
-            axios.post('https://car-doctor-server-ndlqxvmmi-habibur-rahmans-projects.vercel.app/jwt',user,{withCredentials: true})
-          .then(res=>{
-            console.log(res.data)
-            if(res.data.success){
+            if(loggedInUser){
               navigate(location?.state ? location?.state : '/')
             }
           })
-          }
-          
-        })
         .catch(err=>{
           console.error(err)
         })
